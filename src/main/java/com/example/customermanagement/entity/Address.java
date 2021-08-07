@@ -4,9 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name = "address")
 @Entity
@@ -20,6 +18,9 @@ public class Address extends AbstractPersistable<Long> {
     private String region;
     private String zipCode;
     private String country;
-    @OneToOne
-    private Phone phone;
+    private Boolean status;
+
+    @ManyToOne
+    private Customer customer;
+
 }
