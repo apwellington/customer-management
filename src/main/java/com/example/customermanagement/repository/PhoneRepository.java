@@ -13,7 +13,7 @@ import java.util.List;
 public interface PhoneRepository extends JpaRepository<Phone, Long> {
 
     @Query("SELECT p FROM Phone p WHERE p.customer.id = :id")
-    List<Phone> findByCustomerIdAndStatusIsTrue(@Param("customerId") Long id);
+    List<Phone> findByCustomerIdAndStatusIsTrue(@Param("id") Long id);
 
     @Query("UPDATE Phone p set p.status = 0 where p.id = :id")
     void deleteById(@Param("id") Long id);
