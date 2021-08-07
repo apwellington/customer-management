@@ -33,6 +33,7 @@ public class CustomerResource {
 
     @GetMapping({"/", ""})
     public ResponseEntity<List<CustomerDto>> getAll(){
+        logger.info("getAll init");
         List<Customer> customers = customerService.findAll();
         return ResponseEntity.of(Optional.of(GenericMapper.mapCollection(customers, CustomerDto.class, modelMapper)));
     }
