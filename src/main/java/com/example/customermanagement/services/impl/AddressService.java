@@ -38,6 +38,17 @@ public class AddressService  implements IAddressService{
     }
 
     @Override
+    public List<Address> findAll() throws AddressException {
+        try{
+            logger.debug(String.format("findAll()"));
+            return Optional.of(this.addressRepository.findAll()).get();
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new AddressException(e);
+        }
+    }
+
+    @Override
     public Address findById(Long id) throws AddressException {
         try{
             logger.debug(String.format("findById(%s)", id));

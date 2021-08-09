@@ -1,5 +1,7 @@
 package com.example.customermanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -10,12 +12,13 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-@NoArgsConstructor
+@AllArgsConstructor
 @ToString
+@NoArgsConstructor
 public class Address{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull(message = "Name cannot be null")
@@ -40,6 +43,7 @@ public class Address{
     private Boolean status;
 
     @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
 }

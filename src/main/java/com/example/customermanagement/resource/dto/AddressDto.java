@@ -1,9 +1,17 @@
 package com.example.customermanagement.resource.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
 @Data
-public class AddressDto extends AbstractPersistable<Long> {
+@AllArgsConstructor
+@NoArgsConstructor
+public class AddressDto implements Serializable {
     private String name;
     private String lineOne;
     private String lineTwo;
@@ -12,5 +20,6 @@ public class AddressDto extends AbstractPersistable<Long> {
     private String zipCode;
     private String country;
     private Boolean status;
+    @JsonBackReference
     private CustomerDto customer;
 }

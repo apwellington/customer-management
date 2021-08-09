@@ -27,19 +27,26 @@ public class DataLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         Customer customer = new Customer();
+        customer.setName("Wellington");
+        customer.setEmail("well@well.com");
+        customer.setPhone("8098867879");
+        customer.setStatus(true);
+
+
         Address address = new Address();
         address.setZipCode("10805");
         address.setRegion("Santo Domingo Oeste");
         address.setCountry("Santo Domingo");
         address.setName("Casa");
         address.setLineOne("Soldados de Jesucristo");
+        address.setCity("Pantoja");
+        address.setStatus(true);
         address.setCustomer(customer);
         List<Address> addressList = new ArrayList<>();
-        customer.setName("Wellington");
-        customer.setEmail("well@well.com");
-        customer.setPhone("8098867879");
-        customer.setStatus(true);
-        customer.setAddresses();
+        addressList.add(address);
+
+       customerService.create(customer);
+       iAddressService.create(address);
 
     }
 }

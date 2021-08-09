@@ -2,7 +2,9 @@ package com.example.customermanagement.resource;
 
 import com.example.customermanagement.entity.Address;
 import com.example.customermanagement.exceptions.AddressException;
+import com.example.customermanagement.exceptions.CustomerException;
 import com.example.customermanagement.resource.dto.AddressDto;
+import com.example.customermanagement.resource.dto.CustomerDto;
 import com.example.customermanagement.resource.dto.Response;
 import com.example.customermanagement.services.IAddressService;
 import com.example.customermanagement.util.GenericMapper;
@@ -90,10 +92,20 @@ public class AddressResource extends AbstractResource<AddressDto, Long>{
 
     @Override
     public ResponseEntity<Response> findAll(Response response) {
-        return new ResponseEntity("",HttpStatus.NOT_FOUND);
+        try{
+            List<AddressDto> addressDtos = GenericMapper.mapCollection(addressService.findAll(), AddressDto.class, modelMapper);
+            response.response.put("data", addressDtos);
+            response.response.put("message", HttpStatus.OK.getReasonPhrase());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (AddressException ex){
+            ex.printStackTrace();
+            response.response.put("message", ex.getMessage());
+            response.response.put("error", true);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
     }
 
-    @GetMapping("/all/{customerId}")
+    @GetMapping("/customer/{customerId}")
     public ResponseEntity<Response> findAll(@Autowired Response response, @PathVariable Long customerId) {
         try {
             logger.debug(String.format("findAll(%s)" , customerId));
@@ -111,10 +123,10 @@ public class AddressResource extends AbstractResource<AddressDto, Long>{
     }
 
     @Override
-    public ResponseEntity<Response> findById(@PathVariable Long aLong, Response response) {
+    public ResponseEntity<Response> findById(@PathVariable("id") Long id, Response response) {
         try {
-            logger.debug(String.format("findById(%s)" , aLong));
-            AddressDto addressDto = GenericMapper.map(this.addressService.findById(aLong), AddressDto.class,modelMapper);
+            logger.debug(String.format("findById(%s)" , id));
+            AddressDto addressDto = GenericMapper.map(this.addressService.findById(id), AddressDto.class,modelMapper);
             response.response.put("data", addressDto);
             response.response.put("message", HttpStatus.OK.getReasonPhrase());
             return new ResponseEntity<>(response, HttpStatus.OK);
