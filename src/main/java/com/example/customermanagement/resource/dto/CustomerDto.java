@@ -9,6 +9,5 @@ public class CustomerDto {
     private String lastName;
     private String email;
     private Boolean status;
-    private Set<PhoneDto> phones;
     private Set<AddressDto> addresses;
 }

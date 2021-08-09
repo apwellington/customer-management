@@ -2,7 +2,6 @@ server:
   servlet:
     context-path: /api/v1
 
-
 spring:
   config:
     activate:
@@ -18,17 +17,69 @@ spring:
       path: /h2
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: update
+  logging:
+    file:
+      name: customer_management.log
+    level:
+      root: debug
+      org.springframework.web: debug
+      org.hibernate: debug
+      com.example.customermanagement: debug
 
 ---
 spring:
   config:
     activate:
       on-profile: qa
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/customerdb
+    username: root
+    password: sasa
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop
+  logging:
+    file:
+      name: customer_management.log
+    level:
+      root: debug
+      org.springframework.web: debug
+      org.hibernate: debug
+      com.example.customermanagement: debug
 ---
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: dev
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:customerdb
+    username: developemet
+    password: developemet
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop
+  logging:
+    file:
+      name: customer_management.log
+    level:
+      root: debug
+      org.springframework.web: debug
+      org.hibernate: debug
+      com.example.customermanagement: debug
